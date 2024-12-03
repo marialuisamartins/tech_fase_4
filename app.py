@@ -88,30 +88,28 @@ def main():
     st.write(f"**Média do período**: ${ipeadata_filtered['preco'].mean():,.2f}")
     st.write(f"**Desvio Padrão do período**: ${ipeadata_filtered['preco'].std():,.2f}")
 
-    # Previsões
+   # Previsões iniciais
     df_forecast = pd.DataFrame({'ds': ipeadata_filtered.index, 'y': ipeadata_filtered['preco']})
-    future = modelo.make_future_dataframe(periods=2)
-    forecast = modelo.predict(future)
-
-    # Entradas do usuário para previsão
+    
+    # Configuração do sidebar para entradas do usuário
     st.sidebar.header("Configurações da Previsão")
     periods = st.sidebar.number_input("Quantos dias você quer prever?", min_value=1, value=30)
-
+    
     # Botão para gerar previsão
     if st.button("Gerar Previsão"):
-        # Criar DataFrame futuro
-        future = modelo.make_future_dataframe(periods=periods)
+    # Criar DataFrame futuro com os períodos especificados
+    future = modelo.make_future_dataframe(periods=periods)
 
-        # Fazer a previsão
-        forecast = modelo.predict(future)
+    # Fazer a previsão
+    forecast = modelo.predict(future)
 
-        # Mostrar resultados
-        st.subheader("Resultados da Previsão")
-        st.write(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
+    # Mostrar os resultados da previsão
+    st.subheader("Resultados da Previsão")
+    st.write(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
 
-        # Plotar o gráfico
-        st.subheader("Gráfico da Previsão")
-        st.line_chart(forecast[['ds', 'yhat']].set_index('ds'))
+    # Plotar o gráfico da previsão
+    st.subheader("Gráfico da Previsão")
+    st.line_chart(forecast[['ds', 'yhat']].set_index('ds'))
 
     # Seções adicionais como placeholders
     st.write("## Dashboard")

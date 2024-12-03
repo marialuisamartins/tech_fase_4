@@ -47,47 +47,46 @@ def main():
     # Ler o arquivo Excel
     ipeadata = pd.read_excel('ipeadata.xlsx', engine='openpyxl')
 
-    '''
+
     # Definir a coluna 'data' como índice e filtrar para a partir de 2021
-ipeadata['data'] = pd.to_datetime(ipeadata['data'])
-ipeadata.set_index('data', inplace=True)
-ipeadata_filtered = ipeadata[ipeadata.index >= '2021-01-01']
+    ipeadata['data'] = pd.to_datetime(ipeadata['data'])
+    ipeadata.set_index('data', inplace=True)
+    ipeadata_filtered = ipeadata[ipeadata.index >= '2021-01-01']
 
-# Adicionar cabeçalho superior estilizado com HTML
-st.markdown("""
-    <style>
-        .title {
-            text-align: center;
-            font-size: 36px;
-            color: #2C3E50;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-        .header-bar {
-            background-color: #2C3E50;
-            padding: 10px;
-            color: white;
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-        }
-    </style>
-    <div class="header-bar">Dashboard Interativo de Previsão e Análise do Preço do Petróleo</div>
-    <div class="title">Exploração de Dados e Previsões</div>
-""", unsafe_allow_html=True)
+    # Adicionar cabeçalho superior estilizado com HTML
+    st.markdown("""
+        <style>
+            .title {
+                text-align: center;
+                font-size: 36px;
+                color: #2C3E50;
+                font-weight: bold;
+                margin-top: 20px;
+            }
+            .header-bar {
+                background-color: #2C3E50;
+                padding: 10px;
+                color: white;
+                text-align: center;
+                font-size: 24px;
+                font-weight: bold;
+            }
+        </style>
+        <div class="header-bar">Dashboard Interativo de Previsão e Análise do Preço do Petróleo</div>
+        <div class="title">Exploração de Dados e Previsões</div>
+    """, unsafe_allow_html=True)
 
-# Barra lateral com logo da FIAP
-st.sidebar.image('https://upload.wikimedia.org/wikipedia/commons/5/54/Logo_FIAP.png', use_container_width=True)
-st.sidebar.header("Exploração do Preço do Petróleo")
-st.sidebar.write("Análise detalhada de preços e previsões para insights de mercado.")
-
-# Informações estatísticas importantes
-st.markdown("### Estatísticas e Insights Importantes")
-st.write(f"**Valor máximo no período**: ${ipeadata_filtered['preco'].max():,.2f}")
-st.write(f"**Valor mínimo no período**: ${ipeadata_filtered['preco'].min():,.2f}")
-st.write(f"**Média do período**: ${ipeadata_filtered['preco'].mean():,.2f}")
-st.write(f"**Desvio Padrão do período**: ${ipeadata_filtered['preco'].std():,.2f}")
-    '''
+    # Barra lateral com logo da FIAP
+    st.sidebar.image('https://upload.wikimedia.org/wikipedia/commons/5/54/Logo_FIAP.png', use_container_width=True)
+    st.sidebar.header("Exploração do Preço do Petróleo")
+    st.sidebar.write("Análise detalhada de preços e previsões para insights de mercado.")
+    
+    # Informações estatísticas importantes
+    st.markdown("### Estatísticas e Insights Importantes")
+    st.write(f"**Valor máximo no período**: ${ipeadata_filtered['preco'].max():,.2f}")
+    st.write(f"**Valor mínimo no período**: ${ipeadata_filtered['preco'].min():,.2f}")
+    st.write(f"**Média do período**: ${ipeadata_filtered['preco'].mean():,.2f}")
+    st.write(f"**Desvio Padrão do período**: ${ipeadata_filtered['preco'].std():,.2f}")
 
     # Entradas do usuário para previsão
     st.sidebar.header("Configurações da Previsão")

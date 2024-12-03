@@ -88,9 +88,10 @@ def main():
     st.write(f"**Média do período**: ${ipeadata_filtered['preco'].mean():,.2f}")
     st.write(f"**Desvio Padrão do período**: ${ipeadata_filtered['preco'].std():,.2f}")
 
-    # Mostrar a previsão para hoje e para amanhã
-    previsao_hoje = modelo(ipeadata_filtered)
-    previsao_amanha = modelo(ipeadata_filtered).iloc[1]
+    # Previsões
+    df_forecast = pd.DataFrame({'ds': ipeadata_filtered.index, 'y': ipeadata_filtered['preco']})
+    future = modelo.make_future_dataframe(periods=2)
+    forecast = modelo.predict(future)
 
     # Entradas do usuário para previsão
     st.sidebar.header("Configurações da Previsão")

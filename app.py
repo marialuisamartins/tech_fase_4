@@ -45,7 +45,7 @@ def main():
     dados_xls()
 
     # Ler o arquivo Excel
-    ipeadata = pd.read_excel('ipeadata.csv', engine='openpyxl')
+    ipeadata = pd.read_csv('ipeadata.csv', engine='openpyxl')
 
 
     # Definir a coluna 'data' como índice e filtrar para a partir de 2021
@@ -108,9 +108,10 @@ def main():
         forecast_filtered = forecast[forecast['ds'] >= hoje].head(periods)
     
         # Mostrar os resultados da previsão
-        st.subheader(f"Resultados da Previsão (a partir de {hoje.date()})")
-        st.write(forecast_filtered[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
-        st.write(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
+        #st.subheader(f"Resultados da Previsão (a partir de {hoje.date()})")
+        #st.write(forecast_filtered[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
+        #st.write(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
+        st.write(ipeadata)
     
         # Plotar o gráfico da previsão
         st.subheader("Gráfico da Previsão")

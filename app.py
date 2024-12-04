@@ -45,7 +45,7 @@ def main():
     dados_xls()
 
     # Ler o arquivo Excel
-    ipeadata = pd.read_excel('ipeadata.xlsx', engine='openpyxl')
+    ipeadata = pd.read_excel('ipeadata.csv', engine='openpyxl')
 
 
     # Definir a coluna 'data' como índice e filtrar para a partir de 2021

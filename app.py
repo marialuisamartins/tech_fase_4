@@ -105,11 +105,11 @@ def main():
     
         # Filtrar previsões começando do dia seguinte e limitar ao número de dias escolhidos
         hoje = pd.Timestamp.today().normalize()  # Normaliza para ignorar horas
-        dia_seguinte = hoje + pd.Timedelta(days=periods)  # Define o dia seguinte
-        forecast_filtered = forecast[forecast['ds'] >= dia_seguinte].head(periods)
+        # dia_seguinte = hoje + pd.Timedelta(days=periods)  # Define o dia seguinte
+        forecast_filtered = forecast[forecast['ds'] >= hoje].head(periods)
     
         # Mostrar os resultados da previsão
-        st.subheader(f"Resultados da Previsão (a partir de {dia_seguinte.date()})")
+        st.subheader(f"Resultados da Previsão (a partir de {hoje.date()})")
         st.write(forecast_filtered[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
     
         # Plotar o gráfico da previsão

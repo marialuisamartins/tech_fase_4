@@ -42,8 +42,7 @@ def main():
     modelo = carregar_modelo()
     st.success("Modelo carregado com sucesso!")
 
-    dados = dados_xls()
-    dados['Data'] = pd.to_datetime(dados['Data'], errors='coerce', dayfirst=True)
+    dados_xls()
 
     # Ler o arquivo Excel
     ipeadata = pd.read_excel('ipeadata.xlsx', engine='openpyxl')

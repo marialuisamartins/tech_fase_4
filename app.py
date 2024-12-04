@@ -98,18 +98,18 @@ def main():
     # Botão para gerar previsão
     if st.button("Gerar Previsão"):
     # Criar DataFrame futuro com os períodos especificados
-    future = modelo.make_future_dataframe(periods=periods)
+        future = modelo.make_future_dataframe(periods=periods)
 
-    # Fazer a previsão
-    forecast = modelo.predict(future)
-
-    # Mostrar os resultados da previsão
-    st.subheader("Resultados da Previsão")
-    st.write(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
-
-    # Plotar o gráfico da previsão
-    st.subheader("Gráfico da Previsão")
-    st.line_chart(forecast[['ds', 'yhat']].set_index('ds'))
+        # Fazer a previsão
+        forecast = modelo.predict(future)
+    
+        # Mostrar os resultados da previsão
+        st.subheader("Resultados da Previsão")
+        st.write(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
+    
+        # Plotar o gráfico da previsão
+        st.subheader("Gráfico da Previsão")
+        st.line_chart(forecast[['ds', 'yhat']].set_index('ds'))
 
     # Seções adicionais como placeholders
     st.write("## Dashboard")

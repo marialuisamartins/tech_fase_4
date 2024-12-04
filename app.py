@@ -97,19 +97,23 @@ def main():
     
     # Botão para gerar previsão
     if st.button("Gerar Previsão"):
-    # Criar DataFrame futuro com os períodos especificados
+        # Criar DataFrame futuro com os períodos especificados
         future = modelo.make_future_dataframe(periods=periods)
-
+    
         # Fazer a previsão
         forecast = modelo.predict(future)
     
+        # Filtrar previsões apenas após o dia atual
+        hoje = pd.Timestamp.today().normalize()  # Normaliza para ignorar horas
+        forecast_filtered = forecast[forecast['ds'] > hoje]
+    
         # Mostrar os resultados da previsão
-        st.subheader("Resultados da Previsão")
-        st.write(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
+        st.subheader(f"Resultados da Previsão (após {hoje.date()})")
+        st.write(forecast_filtered[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
     
         # Plotar o gráfico da previsão
         st.subheader("Gráfico da Previsão")
-        st.line_chart(forecast[['ds', 'yhat']].set_index('ds'))
+        st.line_chart(forecast_filtered[['ds', 'yhat']].set_index('ds'))
 
     # Seções adicionais como placeholders
     st.write("## Dashboard")

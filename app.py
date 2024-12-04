@@ -9,7 +9,6 @@ import requests
 @st.cache_resource
 def carregar_modelo():
     # URL do modelo Prophet salvo no Google Drive
-    #https://drive.google.com/file/d/11eL3dI9aeUGjVKUSDGrDccLJ4tPQMHTD/view?usp=sharing
     url = 'https://drive.google.com/uc?id=11eL3dI9aeUGjVKUSDGrDccLJ4tPQMHTD'
     
     # Fazer o download do modelo
@@ -21,20 +20,22 @@ def carregar_modelo():
     
     return modelo
 
+# Função para carregar os dados do Excel
 def dados_xls():
     url = 'https://raw.githubusercontent.com/marialuisamartins/tech_fase4/6ad3e07bc901fd984eedb3030510b2816aaf7383/ipeadata%5B03-11-2024-01-09%5D.xlsx'
     arquivo_local = 'ipeadata.xlsx'
     response = requests.get(url)
     with open(arquivo_local, 'wb') as file:
         file.write(response.content)
-
     return arquivo_local
 
 # Função principal do aplicativo
 def main():
     # Configuração da página
-    st.set_page_config(page_title='MVP para análise temporal de petróleo',
-                       page_icon='🛢️')
+    st.set_page_config(
+        page_title='MVP para análise temporal de petróleo',
+        page_icon='🛢️'
+    )
     
     st.write('# MVP para análise de preço do petróleo Brent')
 
@@ -42,13 +43,11 @@ def main():
     modelo = carregar_modelo()
     st.success("Modelo carregado com sucesso!")
 
+    # Carregar os dados do Excel
     dados_xls()
-
-    # Ler o arquivo Excel
     ipeadata = pd.read_excel('ipeadata.xlsx', engine='openpyxl')
 
-
-    # Definir a coluna 'data' como índice e filtrar para a partir de 2021
+    # Processar os dados
     ipeadata['data'] = pd.to_datetime(ipeadata['data'])
     ipeadata.set_index('data', inplace=True)
     ipeadata_filtered = ipeadata[ipeadata.index >= '2021-01-01']
@@ -88,34 +87,33 @@ def main():
     st.write(f"**Média do período**: ${ipeadata_filtered['preco'].mean():,.2f}")
     st.write(f"**Desvio Padrão do período**: ${ipeadata_filtered['preco'].std():,.2f}")
 
-   # Previsões iniciais
-    df_forecast = pd.DataFrame({'ds': ipeadata_filtered.index, 'y': ipeadata_filtered['preco']})
-    
     # Configuração do sidebar para entradas do usuário
     st.sidebar.header("Configurações da Previsão")
     periods = st.sidebar.number_input("Quantos dias você quer prever?", min_value=1, value=30)
     
     # Botão para gerar previsão
     if st.button("Gerar Previsão"):
-        # Criar DataFrame futuro com o número total de períodos necessários
+        # Preparar os dados para o modelo Prophet
+        df_forecast = ipeadata_filtered.reset_index()
+        df_forecast.columns = ['ds', 'y']  # Prophet exige colunas 'ds' e 'y'
+
+        # Criar DataFrame futuro com o número de períodos necessários
         future = modelo.make_future_dataframe(periods=periods)
-    
+
         # Fazer a previsão
         forecast = modelo.predict(future)
-    
-        # Filtrar previsões começando do dia seguinte e limitar ao número de dias escolhidos
-        hoje = pd.Timestamp.today().normalize()  # Normaliza para ignorar horas
+
+        # Filtrar previsões a partir do dia seguinte e limitar ao número de dias escolhidos
+        hoje = pd.Timestamp.today().normalize()
         forecast_filtered = forecast[forecast['ds'] >= hoje].head(periods)
-    
+
         # Mostrar os resultados da previsão
-        #st.subheader(f"Resultados da Previsão (a partir de {hoje.date()})")
-        #st.write(forecast_filtered[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
-        #st.write(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
-        st.write(ipeadata)
-    
+        st.subheader(f"Resultados da Previsão (a partir de {hoje.date()})")
+        st.write(forecast_filtered[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
+        
         # Plotar o gráfico da previsão
         st.subheader("Gráfico da Previsão")
-        st.line_chart(forecast_filtered[['ds', 'yhat']].set_index('ds'))
+        st.line_chart(forecast_filtered.set_index('ds')[['yhat']])
 
     # Seções adicionais como placeholders
     st.write("## Dashboard")

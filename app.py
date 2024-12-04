@@ -110,11 +110,12 @@ def main():
         # Mostrar os resultados da previsão
         st.subheader(f"Resultados da Previsão (a partir de {hoje.date()})")
         #st.write(forecast_filtered[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
-        st.write(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail(periods))
+        st.write(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
     
         # Plotar o gráfico da previsão
         st.subheader("Gráfico da Previsão")
-        st.line_chart(forecast_filtered[['ds', 'yhat']].set_index('ds'))
+        #st.line_chart(forecast_filtered[['ds', 'yhat']].set_index('ds'))
+        st.line_chart(forecast[['ds', 'yhat']].set_index('ds'))
 
     # Seções adicionais como placeholders
     st.write("## Dashboard")

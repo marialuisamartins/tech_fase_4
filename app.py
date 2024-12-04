@@ -57,7 +57,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Barra lateral com logo da FIAP
-st.sidebar.image('https://upload.wikimedia.org/wikipedia/commons/5/54/Logo_FIAP.png', use_container_width=True)
+st.sidebar.image('https://upload.wikimedia.org/wikipedia/commons/d/d4/Fiap-logo-novo.jpg', use_container_width=True)
 st.sidebar.header("Exploração do Preço do Petróleo")
 st.sidebar.write("Análise detalhada de preços e previsões para insights de mercado.")
 

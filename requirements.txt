@@ -1,8 +1,5 @@
-gdown
 pandas
 matplotlib
 seaborn
+statsmodels
 numpy
-plotly
-prophet
-openpyxl

@@ -22,11 +22,9 @@ def carregar_modelo():
     return modelo
 
 def dados_xls():
-    url = 'https://raw.githubusercontent.com/marialuisamartins/tech_fase4/6ad3e07bc901fd984eedb3030510b2816aaf7383/ipeadata%5B03-11-2024-01-09%5D.xlsx'
-    arquivo_local = 'ipeadata.xlsx'
+    url = 'https://github.com/marialuisamartins/tech_fase4/blob/main/ipeadata.csv'
     response = requests.get(url)
-    with open(arquivo_local, 'wb') as file:
-        file.write(response.content)
+    arquivo_local = pd.read_csv('ipeadata.csv')
 
     return arquivo_local
 
@@ -42,7 +40,8 @@ def main():
     modelo = carregar_modelo()
     st.success("Modelo carregado com sucesso!")
 
-    dados_xls()
+    dados = dados_xls()
+    dados['Data'] = pd.to_datetime(dados['Data'], errors='coerce', dayfirst=True)
 
     # Ler o arquivo Excel
     ipeadata = pd.read_excel('ipeadata.xlsx', engine='openpyxl')

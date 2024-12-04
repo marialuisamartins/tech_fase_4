@@ -23,8 +23,10 @@ def carregar_modelo():
 
 def dados_xls():
     url = 'https://github.com/marialuisamartins/tech_fase4/blob/main/ipeadata.csv'
+    arquivo_local = 'ipeadata.csv'
     response = requests.get(url)
-    arquivo_local = pd.read_csv('ipeadata.csv')
+    with open(arquivo_local, 'wb') as file:
+        file.write(response.content)
 
     return arquivo_local
 

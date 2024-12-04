@@ -108,9 +108,10 @@ def main():
         forecast_filtered = forecast[forecast['ds'] >= hoje].head(periods)
     
         # Mostrar os resultados da previsão
-        st.subheader(f"Resultados da Previsão (a partir de {hoje.date()})")
+        #st.subheader(f"Resultados da Previsão (a partir de {hoje.date()})")
         #st.write(forecast_filtered[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
-        st.write(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
+        #st.write(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
+        st.write(ipeadata_filtered)
     
         # Plotar o gráfico da previsão
         st.subheader("Gráfico da Previsão")

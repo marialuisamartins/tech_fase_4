@@ -111,7 +111,7 @@ def main():
         #st.subheader(f"Resultados da Previsão (a partir de {hoje.date()})")
         #st.write(forecast_filtered[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
         #st.write(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
-        st.write(ipeadata_filtered)
+        st.write(ipeadata_filtered['data','preco'])
     
         # Plotar o gráfico da previsão
         st.subheader("Gráfico da Previsão")

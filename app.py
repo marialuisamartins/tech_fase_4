@@ -114,8 +114,7 @@ def main():
     
         # Plotar o gráfico da previsão
         st.subheader("Gráfico da Previsão")
-        #st.line_chart(forecast_filtered[['ds', 'yhat']].set_index('ds'))
-        st.line_chart(forecast[['ds', 'yhat']].set_index('ds'))
+        st.line_chart(forecast_filtered[['ds', 'yhat']].set_index('ds'))
 
     # Seções adicionais como placeholders
     st.write("## Dashboard")

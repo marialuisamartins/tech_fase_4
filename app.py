@@ -22,8 +22,8 @@ def carregar_modelo():
     return modelo
 
 def dados_xls():
-    url = 'https://github.com/marialuisamartins/tech_fase4/blob/main/ipeadata.csv'
-    arquivo_local = 'ipeadata.csv'
+    url = 'https://raw.githubusercontent.com/marialuisamartins/tech_fase4/6ad3e07bc901fd984eedb3030510b2816aaf7383/ipeadata%5B03-11-2024-01-09%5D.xlsx'
+    arquivo_local = 'ipeadata.xlsx'
     response = requests.get(url)
     with open(arquivo_local, 'wb') as file:
         file.write(response.content)
@@ -45,7 +45,7 @@ def main():
     dados_xls()
 
     # Ler o arquivo Excel
-    ipeadata = pd.read_csv('ipeadata.csv')
+    ipeadata = pd.read_excel('ipeadata.excel', engine='openpyxl')
 
 
     # Definir a coluna 'data' como índice e filtrar para a partir de 2021
